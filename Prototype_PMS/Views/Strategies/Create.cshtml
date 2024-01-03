@@ -1,0 +1,78 @@
+﻿@model Prototype_PMS.Models.Strategy
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm("Create", "Strategies", FormMethod.Post, new { role = "form", id = "myform", name = "myform" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.isDelete)
+    @Html.HiddenFor(m => m.isLastDelete)
+    @Html.HiddenFor(m => m.CreateDate)
+    @Html.HiddenFor(m => m.UpdateDate)
+    @Html.HiddenFor(m => m.StrategicObjectiveID)
+    @Html.HiddenFor(m => m.No)
+    @Html.HiddenFor(m => m.ID)
+    <div class="form-horizontal">
+        <h4>Strategy</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row mb-3 my-2">
+            <label class="col-sm-2 col-form-label">วัตถุประสงค์เชิงยุทธศาสตร์</label>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col">
+                        <p>@Html.EditorFor(model => model.Strategy1, new { htmlAttributes = new { @class = "form-control" } }) </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        </div><div class="col d-flex justify-content-end align-items-center">
+            <div class="p-3">
+                <input class="btn btn-primary" type="submit" onclick="AddFormTactic(m => m)" value="เพิ่มกลยุทธ์" />
+            </div>
+        </div>
+
+        {var i = 0;
+            foreach (var item in Model.Tactics)
+            {
+                @Html.EditorFor(m => item, "Tactic", "Tactics[" + i++ + "]")
+            }
+        }
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 my-3">
+                <input type="submit" value="บันทึก" class="btn btn-outline-success" />
+            </div>
+        </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+
+
+    function AddFormTactic(m) {
+        $("#myform").attr("action", '@Url.Action("AddTactic", "Strategies")');
+        $("#myform").submit();
+    }
+
+    function TacticDeleted(m) {
+        m.value = true;
+        $("#myform").attr("action", '@Url.Action("DeleteFormTactic", "Strategies")');
+        $("#myform").submit();
+    }
+
+</script>

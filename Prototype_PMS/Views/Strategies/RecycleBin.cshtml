@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Prototype_PMS.Models.Strategy>
+
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th scope="col">@Html.DisplayName("วันที่ปรับปรุง")</th>
+            <th scope="col">@Html.DisplayName("ยุทธ์ศาสตร์ (Stretegy)")</th>
+            <th scope="col">@Html.DisplayName("จัดการ")</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.UpdateDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Strategy1)</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            @Html.ActionLink("กู้คืน", "Recover", new { id = item.ID }, new { @class = "btn btn-danger" })
+                            @Html.ActionLink("ลบถาวร", "LastDelete", new { id = item.ID }, new { @class = "btn btn-danger", onclick = "return confirm('Are you sure you want to delete?');" })
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

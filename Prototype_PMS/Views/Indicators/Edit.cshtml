@@ -1,0 +1,51 @@
+﻿@model Prototype_PMS.Models.Indicator
+
+@using (Html.BeginForm("Edit", "Indicators", FormMethod.Post, new { @class = "form", id = "myformedit", name = "myformedit" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Indicator</h4>
+        <hr />
+        @Html.EditorFor(m => m)
+        <hr />
+
+        <div class="row">
+            <div class="offset-md-3 col-md-3">
+                <input type="submit" class="btn btn-primary" value="บันทึก"  />
+            </div>
+        </div>
+    </div>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+    function AddFormOwner() {
+        $("#myformedit").attr("action", '@Url.Action("EditAddOwner", "Indicators")');
+        $("#myformedit").submit();
+    }
+
+    function OnDeleted(m) {
+        m.value = true;
+        $("#myformedit").attr("action", '@Url.Action("EditOwnerDelete", "Indicators")');
+        $("#myformedit").submit();
+
+    }
+    function AddFormUnit() {
+        $("#myformedit").attr("action", '@Url.Action("EditAddUnit", "Indicators")');
+        $("#myformedit").submit();
+    }
+
+    function UnitDeleted(m) {
+        m.value = true;
+        $("#myformedit").attr("action", '@Url.Action("EditUnitDelete", "Indicators")');
+        $("#myformedit").submit();
+    }
+    window.onload(function () {
+    }
+    )
+
+</script>

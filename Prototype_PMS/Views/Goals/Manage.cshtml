@@ -1,0 +1,102 @@
+﻿@model Prototype_PMS.Models.StrategicObjective
+
+@{
+    var StrategicObjectiveValue = @ViewBag.Strantegic;
+}
+@Html.HiddenFor(m => m.StrategicObjective1)
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.SOEPlanID)
+@Html.HiddenFor(m => m.SOEPlan)
+@Html.HiddenFor(m => m.isDelete)
+@Html.HiddenFor(m => m.isLastDelete)
+@Html.HiddenFor(m => m.CreateDate)
+@Html.HiddenFor(m => m.UpdateDate)
+@Html.HiddenFor(m => m.No)
+@Html.HiddenFor(m => m.StrategicObjective1, new { StrategicObjectiveValue })
+
+<p>
+    วัตถุประสงค์เชิงยุทธศาสตร์ (Strategic Objectives)
+    <strong>
+        @StrategicObjectiveValue
+        @Html.DisplayFor(m => m.StrategicObjective1)
+    </strong>
+</p>
+@using (Html.BeginForm("Manage", "Goals", FormMethod.Post, new { role = "form", id = "myform", name = "myform" }))
+{
+    @Html.HiddenFor(m => m.isDelete)
+    @Html.HiddenFor(m => m.isLastDelete)
+    @Html.HiddenFor(m => m.CreateDate)
+    @Html.HiddenFor(m => m.UpdateDate)
+    @Html.HiddenFor(m => m.ID)
+    @Html.HiddenFor(m => m.SOEPlanID)
+
+    <div class="row mx-md-n5">
+        <div class="col py-2 px-md-5 bordered col-example">
+            <input class="btn btn-primary" type="submit" onclick="AddForm(m => m)" value="เพิ่ม" />
+        </div>
+    </div>
+    <br />
+    if (Model != null)
+    {
+        <table class="table" colspan="3">
+            <thead class="table-primary text-center">
+                <tr style="border: 2px solid #000; ">
+                    <th scope="col" class="table-bordered" style="max-width:70px">เป้าประสงค์ (Goals)</th>
+                    <th scope="col" class="table-bordered" style="max-width:70px">ตัวชี้วัด (KPIs)</th>
+                    <th scope="col" class="table-bordered" style="max-width:70px">ลบ</th>
+                </tr>
+            </thead>
+            <tbody class="table-bordered">
+                @Html.EditorFor(m => m.Goals)
+            </tbody>
+        </table>
+        <div class="col d-flex justify-content-end align-items-center">
+            <div>
+                <input type="submit" value="บันทึก" class="btn btn-success" onclick="SaveForm()" />
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>No data available.</p>
+    }
+
+    <br />
+}
+
+<script>
+
+
+    function AddForm() {
+        $("#myform input[type=submit]").prop("disabled", true);
+        $("#myform").attr("action", '@Url.Action("AddGoal", "Goals")');
+        $("#myform").submit();
+    }
+
+    function Deleted(m) {
+        m.value = true;
+        $("#myform").attr("action", '@Url.Action("DeleteForm", "Goals")');
+        $("#myform").submit();
+    }
+
+    function AddSEOPlanIndicator(m) {
+        m.value = true;
+        $("#myform").attr("action", '@Url.Action("AddIndicator", "Goals")');
+        $("#myform").submit();
+    }
+
+    function DeletedSEOPlanIndicator(m) {
+        m.value = true;
+        $("#myform").attr("action", '@Url.Action("DeleteIndicator", "Goals")');
+        $("#myform").submit();
+    }
+    function FuncOnChangeIndicator() {
+        $("#myform").attr("action", '@Url.Action("UpdateData", "Goals")');
+        $("#myform").submit();
+        }
+    function SaveForm() {
+        $("#myform").attr("action", '@Url.Action("Manage", "Goals")');
+        $("#myform").submit();
+    }
+
+</script>

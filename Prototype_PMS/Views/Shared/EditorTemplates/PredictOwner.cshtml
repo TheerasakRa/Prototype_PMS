@@ -1,0 +1,59 @@
+﻿@model Prototype_PMS.Models.PredictOwner
+
+@Html.HiddenFor(m => m.isDelete)
+@Html.HiddenFor(m => m.CreateDate)
+@Html.HiddenFor(m => m.UpdateDate)
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.IndicatorID)
+@Html.HiddenFor(m => m.isPredictDelete, new { @Value = false })
+
+@{
+    List<SelectListItem> divisionList = ViewBag.DivisionList;
+    bool IsDisabled = ViewBag.Disable;
+
+}
+@if (Model.isDelete != true)
+{
+    <tr>
+        <th>
+            <div class="custom-dropdown-container">
+                @if (IsDisabled)
+                {
+                    @Html.HiddenFor(m => m.Division)
+                    @Html.DropDownListFor(m => m.Division, divisionList, new { @class = "form-control-sm custom-dropdown", disabled = "disabled" })
+
+                }
+                else
+                {
+                    @Html.DropDownListFor(m => m.Division, divisionList, new { @class = "form-control-sm custom-dropdown" })
+
+                }
+            </div>
+        </th>
+        <th>
+            @if (IsDisabled)
+            {
+                <input value="ลบ" type="submit" class="btn btn-danger disabled" onclick="PredictDeleted(@Html.IdFor(m => m.isPredictDelete));" />
+            }
+            else
+            {
+                <input value="ลบ" type="submit" class="btn btn-danger" onclick="PredictDeleted(@Html.IdFor(m => m.isPredictDelete));" />
+            }
+        </th>
+    </tr>
+}
+else
+{
+    @Html.HiddenFor(m => m.Division)
+}
+<style>
+
+    .dropdown-arrow {
+        position: absolute;
+        top: 50%;
+        right: 10px; /* Adjust as needed */
+        transform: translateY(-50%);
+        color: #555;
+        pointer-events: none;
+    }
+</style>

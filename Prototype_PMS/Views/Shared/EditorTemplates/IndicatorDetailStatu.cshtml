@@ -1,0 +1,17 @@
+﻿@model Prototype_PMS.Models.IndicatorDetailStatu
+
+@Html.HiddenFor(m => m.isDelete)
+@Html.HiddenFor(m => m.CreateDate)
+@Html.HiddenFor(m => m.UpdateDate)
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.isLastDelete)
+
+
+<div class="form-group">
+    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(m => m.Status, ViewBag.Statuses as SelectList, "Please Select", new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+    </div>
+</div>
+

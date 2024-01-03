@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm border border-primary border-top-0 bg-light fixed-top">
+        <div class="container">
+            @*@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+            <a href="/Home"><img id="img_logo" alt="Logo" src="@Url.Content("~/TempsForFile/Picture1.png")" /></a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1 mx-2">
+                    <li>@Html.ActionLink("ผู้ดูแลระบบ", "Index", "SOEPlans", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("จัดการหลักการ CBEs", "Index", "Camps", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("จัดการแผนวิสาหกิจ", "Index", "Camps", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("จัดการแผนแม่บท", "Index", "Camps", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("ข้อมูลตัวชี้วัด", "Index", "Indicators", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("จัดการโครงการ", "Index", "IndicatorTargetAndResult", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("รายงาน", "Index", "Camps", new { area = "" }, new { @class = "nav-link" })</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <br />
+    <br />
+    <div class="container body-content mt-5">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

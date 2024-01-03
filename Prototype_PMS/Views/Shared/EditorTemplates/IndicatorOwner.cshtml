@@ -1,0 +1,26 @@
+﻿@model Prototype_PMS.Models.IndicatorOwner
+
+@Html.HiddenFor(m => m.isDelete)
+@Html.HiddenFor(m => m.CreateDate)
+@Html.HiddenFor(m => m.UpdateDate)
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.IndicatorID)
+@Html.HiddenFor(m => m.isOwnerDelete, new { @Value = false })
+
+@if (Model.isDelete != true)
+{
+
+    <tr>
+        <td>
+            @Html.DropDownListFor(model => model.Division, new SelectList(ViewBag.Division, "Value", "Text", Model.Division), Model.Division, new { @class = "form-control" })
+
+        </td>
+        <td>
+            <input value="ลบ" type="submit" class="btn btn-danger" onclick="OnDeleted(@Html.IdFor(m => m.isOwnerDelete));" />
+        </td>
+    </tr>
+}
+else
+{
+    @Html.HiddenFor(m => m.Division)
+}

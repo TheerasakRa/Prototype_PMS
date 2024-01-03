@@ -1,0 +1,16 @@
+﻿@model Prototype_PMS.Models.ImportantIndicatorResultMeasurement
+
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.PMQY)
+@Html.HiddenFor(m => m.IndicatorID)
+@Html.HiddenFor(m => m.PeriodMountOrQauterOrYearID)
+@Html.HiddenFor(m => m.CreateDate)
+@Html.HiddenFor(m => m.UpdateDate)
+@Html.HiddenFor(m => m.CreateBy)
+@Html.HiddenFor(m => m.UpdateBy)
+@Html.HiddenFor(m => m.IsDelete)
+@Html.HiddenFor(m => m.IsLastDelete)
+
+<div>
+    @Html.EditorFor(m => m.ForecastPeriods)
+</div>

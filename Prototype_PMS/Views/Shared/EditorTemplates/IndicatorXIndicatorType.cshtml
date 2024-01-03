@@ -1,0 +1,25 @@
+﻿@model Prototype_PMS.Models.IndicatorXIndicatorType
+
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.CreateDate)
+@Html.HiddenFor(m => m.CreateBy)
+@Html.HiddenFor(m => m.UpdateDate)
+@Html.HiddenFor(m => m.UpdateBy)
+@Html.HiddenFor(m => m.Indicator)
+@Html.HiddenFor(m => m.IndicatorID)
+@Html.HiddenFor(m => m.IndicatorType.IndicatorType1)
+@Html.HiddenFor(m => m.IndicatorTypeID)
+@Html.HiddenFor(m => m.isDelete)
+@Html.HiddenFor(m => m.isLastDelete)
+
+<br />
+<tr>
+    <td>
+        @Html.CheckBoxFor(m => Model.isCheck)
+        @Html.DisplayFor(m => Model.IndicatorType.IndicatorType1)
+    </td>
+    <td>
+        <p class="container text-center ">@Html.TextAreaFor(model => model.Definition, 3, 50, new { @class = "border", style = "width: 50%; max-width: 100% !important; padding: 5px;" }) </p>
+        <p>@Html.ValidationMessageFor(model => model.Definition, "", new { @class = "text-danger" })</p>
+    </td>
+</tr>

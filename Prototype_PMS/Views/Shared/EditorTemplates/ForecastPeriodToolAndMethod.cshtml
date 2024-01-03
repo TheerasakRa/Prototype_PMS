@@ -1,0 +1,50 @@
+﻿@model Prototype_PMS.Models.ForecastPeriodToolAndMethod
+@{
+    bool isShowTool = ViewBag.IsShowTool;
+}
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.ForecastPeriodID)
+@Html.HiddenFor(m => m.ForecastToolID)
+@Html.HiddenFor(m => m.IsOtherTool)
+@Html.HiddenFor(m => m.CreateBy)
+@Html.HiddenFor(m => m.CreateDate)
+@Html.HiddenFor(m => m.UpdateBy)
+@Html.HiddenFor(m => m.UpdateDate)
+@Html.HiddenFor(m => m.IsDelete)
+@Html.HiddenFor(m => m.IsLastDelete)
+@Html.HiddenFor(m => m.ToolName)
+<div>
+    @if (isShowTool)
+    {
+        if (Model.IsOtherTool)
+        {
+            <div>
+                @Html.CheckBoxFor(m => m.IsUse, new { onclick = "CheckMethod(" + @Html.IdFor(m => m.Method) + ");" })
+                @Html.DisplayFor(m => m.ToolName)
+                <br />
+                @Html.EditorFor(m => m.OtherTool)
+            </div>
+        }
+        else
+        {
+            <div>
+                @Html.CheckBoxFor(m => m.IsUse, new { onclick = "CheckMethod(" + @Html.IdFor(m => m.Method) + ");" })
+                @Html.DisplayFor(m => m.ToolName)
+            </div>
+        }
+    }
+    else
+    {
+        <div>
+            @if (Model.IsUse)
+            {
+                @Html.EditorFor(m => m.Method, new { htmlAttributes = new { @class = "form" } })
+            }
+            else
+            {
+                @Html.EditorFor(m => m.Method, new { htmlAttributes = new { @class = "form", disabled = "disabled" } })
+            }
+
+        </div>
+    }
+</div>

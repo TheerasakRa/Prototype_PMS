@@ -1,0 +1,26 @@
+﻿@model Prototype_PMS.Models.ImportantIndicatorTargetMeasuerment
+
+@{
+    bool IsDisabled = ViewBag.Disable;
+}
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.IndicatorID)
+@Html.HiddenFor(m => m.IndicatorLevel)
+@Html.HiddenFor(m => m.CreateDate)
+@Html.HiddenFor(m => m.UpdateDate)
+@Html.HiddenFor(m => m.isDelete)
+@Html.HiddenFor(m => m.IndicatorLevel)
+
+
+
+@*@Html.EditorFor(m => m.Target, new { HtmlAttributes = new { @class = "form-control" } })*@
+
+@if (IsDisabled)
+{
+    @Html.HiddenFor(m => m.Target)
+    @Html.EditorFor(m => m.Target, new { HtmlAttributes = new { type = "number", step = "any", disabled = "disabled" } })
+}
+else
+{
+    @Html.EditorFor(m => m.Target, new { HtmlAttributes = new { type = "number", step = "any" } })
+}

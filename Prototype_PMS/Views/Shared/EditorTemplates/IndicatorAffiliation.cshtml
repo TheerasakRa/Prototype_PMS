@@ -1,0 +1,44 @@
+﻿@model Prototype_PMS.Models.IndicatorOwner
+
+@Html.HiddenFor(m => m.isDelete)
+@Html.HiddenFor(m => m.CreateDate)
+@Html.HiddenFor(m => m.UpdateDate)
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.IndicatorID)
+@Html.HiddenFor(m => m.isOwnerDelete, new { @Value = false })
+
+@if (Model.isDelete != true)
+{
+
+    <tr>
+        <td>
+            <label>
+                Multi-select
+                <input mbsc-input id="division-input" data-dropdown="true" data-tags="true" />
+            </label>
+            <select id="division" multiple>
+                @foreach (var item in ViewBag.Division)
+                {
+                    <option value="@item.Value" @(Model.Division.Contains(item.Value) ? "selected" : "")>@item.Text</option>
+                }
+            </select>
+        </td>
+        <td>
+            <input value="ลบ" type="submit" class="btn btn-danger" onclick="OnDeleted(@Html.IdFor(m => m.isOwnerDelete));" />
+        </td>
+    </tr>
+}
+else
+{
+    @Html.HiddenFor(m => m.Division)
+}
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#division').mobiscroll().select({
+                inputElement: document.getElementById('division-input'),
+                touchUi: false
+            });
+        });
+    </script>
+}

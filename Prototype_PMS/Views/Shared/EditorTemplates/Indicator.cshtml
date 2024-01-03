@@ -1,0 +1,153 @@
+﻿@model Prototype_PMS.Models.Indicator
+
+@Html.HiddenFor(m => m.isDelete)
+@Html.HiddenFor(m => m.CreateDate)
+@Html.HiddenFor(m => m.UpdateDate)
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.isLastDelete)
+
+<div>
+    <div class="row mb-3 my-2">
+        <label class="col-sm-3 col-form-label">ตัวชี้วัด/เกณฑ์วัดการดำเนินงาน</label>
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col">
+                    <p>@Html.TextAreaFor(model => model.Indicator1, 3, 50, new { @class = "border", style = "width: 100%; border: 0; max-width: 100% !important; padding: 0;" }) </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col d-flex justify-content-end align-items-center">
+        <div class="p-3">
+            <input class="btn btn-primary" type="submit" onclick="AddFormOwner()" value="เพิ่ม" />
+        </div>
+    </div>
+    <br />
+    @if (Model != null)
+    {
+        <label class="col-sm-3 col-form-label">หน่วยงานผู้รับผิดชอบตัวชี้วัด: </label>
+        <table class="table" colspan="3">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col" class="table-bordered">หน่วยงาน</th>
+                    <th scope="col" class="table-bordered">จัดการ</th>
+                </tr>
+            </thead>
+            <tbody class="table-bordered">
+                @Html.EditorFor(m => m.IndicatorOwners)
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No data available.</p>
+    }
+
+    @if (Model != null)
+    {
+        <div class="container ">
+            <label class="col-sm-3 col-form-label">ประเภทตัวชี้วัด: </label>
+            <table class="table ">
+                <thead class="table-dark ">
+                    <tr>
+                        <th class="table-bordered col text-center">เลือกประเภทตัวชี้วัด</th>
+                        <th class="table-bordered col text-center">คำจำกัดความตัวชี้วัด</th>
+                    </tr>
+                </thead>
+                <tbody class="table-bordered">
+                    @Html.EditorFor(m => m.IndicatorXIndicatorTypes)
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p>No data available.</p>
+    }
+
+
+    <div class="col d-flex justify-content-end align-items-center">
+        <div class="p-3">
+            <input class="btn btn-primary" type="submit" onclick="AddFormUnit()" value="เพิ่ม" />
+        </div>
+    </div>
+    <br />
+    @if (Model != null)
+    {
+        <label class="col-sm-3 col-form-label">หน่วยวัด: </label>
+        <table class="table" colspan="3">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col" class="table-bordered">หน่วยวัด</th>
+                    <th scope="col" class="table-bordered">จัดการ</th>
+                </tr>
+            </thead>
+            <tbody class="table-bordered">
+                @Html.EditorFor(m => m.IndicatorUnits)
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No data available.</p>
+    }
+    <div>
+        <div class="row mb-3 my-2 col-md-8">
+            <label class="col-sm-3 col-form-label">กำหนดสูตรการคำนวน: </label>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            @Html.EditorFor(m => m.Formula)
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="row mb-3 my-2 col-md-8">
+            <label class="col-sm-3 col-form-label">รายละเอียดตัวชี้วัด </label>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            @Html.DropDownListFor(m => m.IndicatorDetailStatusID, new SelectList(ViewBag.Statuses, "Value", "Text"), new { @class = "form-control" })
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <div class="row mb-3 my-2 col-md-8">
+        <label class="col-sm-3 col-form-label">วันที่ปรับปรุง: </label>
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col">
+                    <p>
+                        @Html.EditorFor(m => m.UpdateDate, "DateTime", new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                        @Html.ValidationMessageFor(m => m.UpdateDate, "", new { @class = "text-danger" })
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="row mb-3 my-2 col-md-9">
+        <label class="col-sm-3 col-form-label">สถานะตัวชี้วัด: </label>
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col">
+                    <p>
+                        @Html.RadioButtonFor(m => m.isActive, true) @Html.DisplayName("ใช้งาน")
+                        @Html.RadioButtonFor(m => m.isActive, false) @Html.DisplayName("ไม่ใช้งาน")
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

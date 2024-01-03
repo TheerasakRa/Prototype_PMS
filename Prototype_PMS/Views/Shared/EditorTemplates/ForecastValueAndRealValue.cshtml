@@ -1,0 +1,23 @@
+﻿@model Prototype_PMS.Models.ForecastValueAndRealValue
+@Html.HiddenFor(m => m.unitIndex)
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m=>m.ForecastPeriodID)
+@Html.HiddenFor(m=>m.UpdateDate)
+@Html.HiddenFor(m=>m.CreateDate)
+@Html.HiddenFor(m=>m.IsLastDelete)
+@Html.HiddenFor(m=>m.IsDelete)
+@{
+    List<SelectListItem> indicatorUnitDropdownList = ViewBag.IndicatorUnitDropdownList;
+}
+
+<td>
+    <input value="@indicatorUnitDropdownList[Model.unitIndex].Text" disabled />
+</td>
+<td>
+    @Html.EditorFor(model => model.RealValue, new { htmlAttributes = new { @class = "form-control", style = "width: 90px;" } })
+</td>
+<td>
+
+    @Html.EditorFor(model => model.ForecastValue, new { htmlAttributes = new { @class = "form-control", style = "width: 90px;" } })
+</td>
+

@@ -1,0 +1,56 @@
+﻿@model Prototype_PMS.Models.Indicator
+
+@using (Html.BeginForm("Create", "Indicators", FormMethod.Post, new { role = "form", id = "myform", name = "myform" }))
+
+{
+    @Html.AntiForgeryToken()
+    @*@Html.HiddenFor(m=>m.ID)*@
+
+
+    <div class="form-horizontal">
+        <h4>Indicator</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.EditorFor(m => m)
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+<script>
+
+
+    function AddFormOwner() {
+        $("#myform").attr("action", '@Url.Action("AddOwner", "Indicators")');
+        $("#myform").submit();
+    }
+
+    function OnDeleted(m) {
+        m.value = true;
+        $("#myform").attr("action", '@Url.Action("OwnerDelete", "Indicators")');
+        $("#myform").submit();
+
+    }
+    function AddFormUnit() {
+        $("#myform").attr("action", '@Url.Action("AddUnit", "Indicators")');
+        $("#myform").submit();
+    }
+
+    function UnitDeleted(m) {
+        m.value = true;
+        $("#myform").attr("action", '@Url.Action("UnitDelete", "Indicators")');
+        $("#myform").submit();
+    }
+    window.onload(function () {
+    }
+    )
+</script>

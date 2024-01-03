@@ -1,0 +1,26 @@
+﻿@model Prototype_PMS.Models.Tactic
+
+@Html.HiddenFor(m => m.isDelete)
+@Html.HiddenFor(m => m.isLastDelete)
+@Html.HiddenFor(m => m.CreateDate)
+@Html.HiddenFor(m => m.UpdateDate)
+@Html.HiddenFor(m => m.StrategyID)
+@Html.HiddenFor(m => m.No)
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.isDeleteFormTactic)
+
+@if(Model.isDelete != true)
+{ 
+<div class="row mb-3 my-2">
+    <label class="col-sm-2 col-form-label">กลยุทธ์ (Tactic)</label>
+    <div class="col-md-5">
+        <div class="row">
+            <div class="col">
+                <p>@Html.EditorFor(model => model.Tactic1, new { htmlAttributes = new { @class = "form-control" } }) </p>
+                <p><input value="ลบ" type="submit" class="btn btn-danger" onclick="TacticDeleted(@Html.IdFor(m => m.isDeleteFormTactic));" /></p>
+            </div>
+        </div>
+    </div>
+</div>
+}
+

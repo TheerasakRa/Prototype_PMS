@@ -1,0 +1,48 @@
+﻿@model Prototype_PMS.Models.SOEPlanIndicator
+
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.GoalID)
+@Html.HiddenFor(m => m.IsDelete)
+@Html.HiddenFor(m => m.IsLastDelete)
+@Html.HiddenFor(m => m.CreateDate)
+@Html.HiddenFor(m => m.UpdateDate)
+@Html.HiddenFor(m => m.CreateBy)
+@Html.HiddenFor(m => m.UpdateBy)
+@Html.HiddenFor(m => m.No)
+
+
+@{
+    var IndicatorData = Model.IndicatorItem;
+    var IndicatorUnitData = Model.IndicatorUnitItem;
+
+}
+
+@if (Model.IsDelete != true)
+{
+    <tr class="table table-light" style="max-width: 70px">
+        <td style="max-width:100px;">
+            @if (IndicatorData != null)
+            {
+                @Html.DropDownListFor(m => m.IndicatorID, new SelectList(IndicatorData, "Value", "Text", Model.IndicatorID), "Select", new { onchange = "FuncOnChangeIndicator()" })
+            }
+            else
+            {
+                <span>No data available</span>
+            }
+            @*@Html.DropDownListFor(m => m.IndicatorID, new SelectList(IndicatorData, "Value", "Text", Model.IndicatorID), "Select", new { onchange = "FuncOnChangeIndicator()" })*@
+        </td>
+        <td style="max-width:100px;">
+            @if (IndicatorUnitData != null)
+            {
+                @Html.DropDownListFor(m => m.IndicatorUnitID, new SelectList(IndicatorUnitData, "Value", "Text", Model.IndicatorUnitID), "Select", new {@class=""})
+            }
+            else
+            {
+            <span>Please select Indicator information</span>
+            }
+        </td>
+        <td>
+            <input value="ลบ" class="btn btn-danger" type="button" onclick="DeletedSEOPlanIndicator(@Html.IdFor(m=>m.IsDelete))" />
+        </td>
+    </tr>
+}

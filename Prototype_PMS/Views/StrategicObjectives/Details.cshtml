@@ -1,0 +1,90 @@
+﻿@model Prototype_PMS.Models.StrategicObjective
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>StrategicObjective</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.No)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.No)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StrategicObjective1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StrategicObjective1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Updateby)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Updateby)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isDelete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isDelete)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isLastDelete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isLastDelete)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SOEPlan.ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SOEPlan.ID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

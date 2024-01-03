@@ -1,0 +1,15 @@
+﻿@model Prototype_PMS.Models.Indicator
+@{
+    Dictionary<int, string> PeriodDict = ViewBag.PeriodDict;
+}
+@Html.HiddenFor(m => m.ForeCastPeriodSelected_Index)
+<div>
+    @foreach (KeyValuePair<int, string> i in PeriodDict)
+    {
+        <input value="@i.Value" class="@(i.Key == Model.ForeCastPeriodSelected_Index ? "btn btn-primary" : "btn btn-outline-primary") mb-2" type="submit" onclick="ChangeMonthQuarterHailfYear(@Html.IdFor(m => m.ForeCastPeriodSelected_Index),@i.Key)" />
+    }
+</div>
+
+@Html.EditorFor(m => m.ImportantIndicatorResultMeasurements, "", new { QuarterIndex = Model.PeriodSelected_Index })
+
+<br />

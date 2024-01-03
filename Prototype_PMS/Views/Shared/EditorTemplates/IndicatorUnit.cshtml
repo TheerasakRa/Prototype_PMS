@@ -1,0 +1,27 @@
+﻿@model Prototype_PMS.Models.IndicatorUnit
+
+@Html.HiddenFor(m => m.isDelete)
+@Html.HiddenFor(m => m.CreateDate)
+@Html.HiddenFor(m => m.UpdateDate)
+@Html.HiddenFor(m => m.ID)
+@Html.HiddenFor(m => m.IndicatorID)
+@Html.HiddenFor(m => m.isUnitDelete, new { @Value = false })
+
+
+@if (Model.isDelete != true)
+{
+    <tr>
+        <td>
+            <p>@Html.TextAreaFor(model => model.Unit, 3, 50, new { @class = "border", style = "width: 50%; border: 0; max-width: 100% !important; padding: 0;" }) </p>
+            <p>@Html.ValidationMessageFor(model => model.Unit, "", new { @class = "text-danger" })</p>
+        </td>
+        <td>
+            <input value="ลบ" type="submit" class="btn btn-danger" onclick="UnitDeleted(@Html.IdFor(m => m.isUnitDelete));" />
+        </td>
+    </tr>
+}
+else
+{
+    @Html.HiddenFor(m => m.Unit)
+
+}

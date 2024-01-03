@@ -1,0 +1,170 @@
+﻿@model Prototype_PMS.Models.Indicator
+
+@using (Html.BeginForm("Result", "IndicatorTargetAndResult", FormMethod.Post, new { @class = "form-horizontal", id = "resultform", name = "resultform", role = "resultform", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.ID)
+    @Html.HiddenFor(m => m.isActive)
+    @Html.HiddenFor(m => m.IsActiveText)
+    @Html.HiddenFor(m => m.CreateBy)
+    @Html.HiddenFor(m => m.UpdateBy)
+    @Html.HiddenFor(m => m.CreateDate)
+    @Html.HiddenFor(m => m.UpdateDate)
+    @Html.HiddenFor(m => m.Formula)
+    @Html.HiddenFor(m => m.Indicator1)
+    @Html.HiddenFor(m => m.IndicatorDetailStatusID)
+
+    <div hidden>
+        @Html.EditorFor(m => m.IndicatorXIndicatorTypes)
+        @Html.EditorFor(m => m.IndicatorUnits)
+    </div>
+    <fieldset>
+        <div class="row">
+            <div class="col-md-auto text-end">
+                @Html.DisplayName("ปีงบประมาณ : ")
+            </div>
+            <div class="col-md-4">
+                @Html.DropDownList("SelectYear", (List<SelectListItem>)ViewBag.YearList, new { @class = "form-control", @disabled = "disabled" })
+
+            </div>
+        </div>
+    </fieldset>
+    <br />
+    <fieldset>
+        <div class="row">
+            <div class="col-md-auto mx-2 text-end">
+                @Html.Label("ชื่อตัวชี้วัด : ", htmlAttributes: new { @class = "control-label " })
+            </div>
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Indicator1, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                @Html.ValidationMessageFor(model => model.Indicator1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <div class="col d-flex justify-content-end align-items-center">
+            <div class="p-3">
+                <input type="submit" value="เพิ่ม" class="btn btn-primary disabled" onclick="AddForm()" />
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr class="d-flex justify-content-end">
+                    <th>สังกัด</th>
+                </tr>
+            </thead>
+            <tbody id="ownersTableBody" class="">
+
+                @Html.EditorFor(m => m.PredictOwners, new { Disable = true })
+
+            </tbody>
+
+        </table>
+    </fieldset>
+
+    <fieldset>
+
+        <div class="row mb-3 my-2 col-md-9">
+            <label class="col-sm-3 col-form-label">ความถึ่: </label>
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            @for (int i = 0; i < Model.ImportantIndicatorResultMeasurements.Count; i++)
+                            {
+                                if (i == 0)
+                                {
+                                    @Html.RadioButtonFor(m => m.PeriodSelected_Index, i, new { @class = "mx-2", onclick = "ChangePeriodValue()", @checked = true })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(m => m.PeriodSelected_Index, i, new { @class = "mx-2", onclick = "ChangePeriodValue()" })
+                                }
+                                @Html.DisplayFor(m => m.ImportantIndicatorResultMeasurements.ToList()[i].PMQY)
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+
+    <fieldset>
+        <div class="col d-flex justify-content-end align-items-center">
+            <div class="p-3">
+                <input class="btn btn-primary disabled" type="submit" onclick="AddFormImp()" value="เพิ่ม" />
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>ตัวชี้วัดสำคัญ</legend>
+        <table class="table table-striped table-primary table-sm">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center" rowspan="2">@Html.DisplayName("ชื่อตัวชี้วัด")</th>
+                    <th scope="col" class="text-center" rowspan="2">@Html.DisplayName("หน่วยวัด")</th>
+                    <th scope="col" class="text-center" colspan="5">@Html.DisplayName("ค่าเป้าหมาย/เกณฑ์วัด")</th>
+                    <th scope="col" class="text-center" rowspan="2">@Html.DisplayName("จัดการ")</th>
+                </tr>
+                <tr>
+                    <th class="text-center">1</th>
+                    <th class="text-center">2</th>
+                    <th class="text-center">3</th>
+                    <th class="text-center">4</th>
+                    <th class="text-center">5</th>
+                </tr>
+            </thead>
+            <tbody class="table table-striped text-center ">
+                <tr>
+                    @Html.EditorFor(m => m, "IndicatorTarget", new { Disable = true })
+                </tr>
+            </tbody>
+
+        </table>
+    </fieldset>
+    <fieldset>
+        @Html.EditorFor(m => m, "IndicatorResult")
+    </fieldset>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="บันทึก" class="btn btn-outline-success " />
+        </div>
+    </div>
+}
+<script>
+    function ChangePeriodValue() {
+        $("#resultform").attr("action", '@Url.Action("ChangePeriod","IndicatorTargetAndResult")');
+        $("#resultform").submit();
+    }
+
+    function ChangeMonthQuarterHailfYear(m,k) {
+        m.value = k;
+        $("#resultform").attr("action", '@Url.Action("ChangeMonthQuarterHailfYear","IndicatorTargetAndResult")');
+        $("#resultform").submit();
+    }
+    function CheckMethod(method_id) {
+        method_id.disabled = !method_id.disabled;
+    }
+
+    function CheckMethodRemark(methodRem_id,methodRema_id) {
+        methodRem_id.disabled = !methodRem_id.disabled;
+        methodRema_id.disabled = !methodRema_id.disabled;
+    }
+
+    function FuncAddCompetitorValue(e) {
+        e.value = true;
+        $("#resultform").attr("action", '@Url.Action("AddCompetitorValue", "IndicatorTargetAndResult")');
+        $("#resultform").submit();
+    }
+    function FuncDelCompetitorValue(e) {
+        e.value = true;
+
+        $("#resultform").attr("action", '@Url.Action("DeleteCompetitorValue", "IndicatorTargetAndResult")');
+        $("#resultform").submit();
+    }
+
+</script>

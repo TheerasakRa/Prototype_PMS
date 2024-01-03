@@ -1,0 +1,16 @@
+﻿@model Prototype_PMS.Models.Indicator
+
+@{
+    Prototype_PMS.Models.ImportantIndicatorTargetMeasuerment importantIndicatorTargetMeasuerment = new Prototype_PMS.Models.ImportantIndicatorTargetMeasuerment();
+    Prototype_PMS.Models.IndicatorOwner indicatorOwner = new Prototype_PMS.Models.IndicatorOwner();
+    List<SelectListItem> indicatorTypeDropdownList = ViewBag.IndicatorTypeDropdownList;
+    List<SelectListItem> indicatorUnitDropdownList = ViewBag.IndicatorUnitDropdownList;
+    bool IsDisabled = ViewBag.Disable;
+
+}
+@Html.HiddenFor(m => m.Indicator1)
+@Html.HiddenFor(m => m.ID)
+
+<td>
+    @Html.EditorFor(m => m.ImportantIndicatorTargetMeasuerments ,new{ Disable = IsDisabled })
+</td>
