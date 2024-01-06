@@ -17,6 +17,12 @@ namespace Prototype_PMS.Models
         public Nullable<int> StrategicObjectiveID { get; set; }
         [DisplayName("กลยุทธ์ (Tactic)")]
         public virtual ICollection<Tactic> Tactics { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> UpdateDate { get; set; }
     }
     [MetadataType(typeof(StrategyMetadata))]
     public partial class Strategy

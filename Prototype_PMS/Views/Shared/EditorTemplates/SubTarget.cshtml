@@ -11,16 +11,12 @@
 @Html.HiddenFor(m => m.isDelete)
 @Html.HiddenFor(m => m.IndicatorLevel)
 
-
-
-@*@Html.EditorFor(m => m.Target, new { HtmlAttributes = new { @class = "form-control" } })*@
-
 @if (IsDisabled)
 {
     @Html.HiddenFor(m => m.Target)
-    @Html.EditorFor(m => m.Target, new { HtmlAttributes = new { type = "number", step = "any", disabled = "disabled" } })
+    @Html.EditorFor(m => m.Target, new { HtmlAttributes = new { type = "number", step = "any", disabled = "disabled" }, style = "width: 120px;" })
 }
 else
 {
-    @Html.EditorFor(m => m.Target, new { HtmlAttributes = new { type = "number", step = "any" } })
+    @Html.EditorFor(m => m.Target, new { HtmlAttributes = new { type = "number", step = "any" }, style = "width: 120px;" })
 }

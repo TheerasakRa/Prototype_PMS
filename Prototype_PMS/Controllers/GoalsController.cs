@@ -12,34 +12,24 @@ namespace Prototype_PMS.Controllers
     public class GoalsController : Controller
     {
         private PMSEntities1 db = new PMSEntities1();
-
+        private static int? _StrategicObjectiveID;
         // GET: Goals
         public ActionResult Manage(int? StrategicObjectiveID)
         {
-            // ดึงข้อมูล Indicator ที่ยังไม่ถูกลบ
             var indicators = db.Indicators.Where(s => s.isDelete == false);
 
-            // ค้นหา StrategicObjective จาก ID
             StrategicObjective strategicObjective = db.StrategicObjectives.Find(StrategicObjectiveID);
 
-            // ถ้าไม่พบ StrategicObjective ให้แสดง HTTP 404 Not Found
-            if (strategicObjective == null)
-            {
-                return HttpNotFound();
-            }
-
-            // ถ้า StrategicObjective ไม่มี Goals ให้เพิ่มข้อมูล Goal ใหม่
+            _StrategicObjectiveID = StrategicObjectiveID;
             if (strategicObjective.Goals.Count == 0)
             {
                 Information(strategicObjective);
             }
 
-            // ส่งข้อมูลที่ต้องการใน View
-            ViewBag.Strantegic = strategicObjective.StrategicObjective1;
-            ViewBag.StrategicObjectiveID = StrategicObjectiveID;
+            ViewBag.TitleStr = strategicObjective.StrategicObjective1;
             IndicatorUnitData(strategicObjective);
             IndicatorData(strategicObjective);
-            return View(strategicObjective);
+            return View("Manage", strategicObjective);
         }
 
         [HttpPost]
@@ -52,17 +42,15 @@ namespace Prototype_PMS.Controllers
             IndicatorUnitData(strategicObjective);
             IndicatorData(strategicObjective);
 
-            ViewBag.Strantegic = strategicObjective.StrategicObjective1;
-
             // ส่งข้อมูลที่ต้องการใน View
+            ViewBag.TitleStr = strategicObjective.StrategicObjective1;
+
             ModelState.Clear();
             return View("Manage", strategicObjective);
         }
-
         [HttpPost]
         public ActionResult AddIndicator(StrategicObjective strategicObjective)
         {
-            // ลูปผ่าน Goals และเพิ่ม Indicator ใหม่ในแต่ละ Goal ตามที่ผู้ใช้เลือก
             foreach (var goal in strategicObjective.Goals)
             {
                 if (goal.IsAddIndicator)
@@ -75,28 +63,35 @@ namespace Prototype_PMS.Controllers
                     SOEPlanIndicator.IsLastDelete = false;
                     SOEPlanIndicator.GoalID = goal.ID;
 
-                    // กำหนด No ให้ SOEPlanIndicator
-                    var last = db.SOEPlanIndicators.ToList().LastOrDefault();
-                    if (last == null)
+                    // ตรวจสอบว่ามี SOEPlanIndicators ใน Goal หรือไม่
+                    if (goal.SOEPlanIndicators.Any())
                     {
-                        last = new SOEPlanIndicator();
-                        last.No = 0;
+                        // นับ No ต่อจาก No ของ SOEPlanIndicator ล่าสุด
+                        var lastNo = goal.SOEPlanIndicators.Max(si => si.No);
+                        SOEPlanIndicator.No = lastNo + 1;
                     }
-                    SOEPlanIndicator.No = last.No + 1;
+                    else
+                    {
+                        // หา No ของ Goal ล่าสุด
+                        var lastGoal = db.Goals.OrderByDescending(g => g.No).FirstOrDefault();
+                        var lastGoalNo = lastGoal?.No ?? 0;
 
-                    // เพิ่ม SOEPlanIndicator ใน Goal
+                        // นับ No ต่อจาก No ของ Goal ล่าสุด
+                        SOEPlanIndicator.No = lastGoalNo + 1;
+                    }
+
+                    SOEPlanIndicator.GoalID = goal.ID;
                     goal.SOEPlanIndicators.Add(SOEPlanIndicator);
                     goal.IsAddIndicator = false;
                 }
             }
 
-            ViewBag.Strantegic = strategicObjective.StrategicObjective1;
-            // ส่งข้อมูลที่ต้องการใน View
             IndicatorUnitData(strategicObjective);
             IndicatorData(strategicObjective);
             ModelState.Clear();
             return View("Manage", strategicObjective);
         }
+
 
         [HttpPost]
         public ActionResult DeleteIndicator(StrategicObjective strategicObjective)
@@ -116,8 +111,6 @@ namespace Prototype_PMS.Controllers
                     else
                     {
                         goal.IsDeleteIndicator = true;
-
-                        // ล้าง SOEPlanIndicators ใน Goal
                         goal.SOEPlanIndicators.Clear();
                     }
                 }
@@ -135,55 +128,56 @@ namespace Prototype_PMS.Controllers
         [HttpPost]
         public ActionResult Manage(StrategicObjective strategicObjective)
         {
-            var goal = strategicObjective.Goals;
-            // วนลูปผ่าน Goals และบันทึกหรืออัพเดทข้อมูล
-
-            SaveDataSOEGoal(goal);
-            // บันทึกข้อมูลลงในฐานข้อมูล
+            SaveDataSOEGoal(strategicObjective.Goals);
             db.SaveChanges();
-
-            // Redirect ไปที่ Action อื่น
+            IndicatorData(strategicObjective);
+            IndicatorUnitData(strategicObjective);
             return RedirectToAction("Index", "StrategicObjectives", new { SOEPlanID = strategicObjective.SOEPlanID });
         }
 
-        private void SaveDataSOEGoal(ICollection<Goal> goal)
+        private void SaveDataSOEGoal(ICollection<Goal> goals)
         {
-            foreach (var a in goal)
+            foreach (var goal in goals)
             {
-
-                var SOEPlanIndicator = a.SOEPlanIndicators;
-                a.SOEPlanIndicators = new List<SOEPlanIndicator>();
-                a.UpdateDate = DateTime.Now;
-                if (a.ID == 0)
+                if (goal.ID == 0)
                 {
-                    if (a.isDelete != true)
+                    if (goal.isDelete != true)
                     {
-                        db.Goals.Add(a);
+                        goal.isDelete = false;
+                        goal.isLastDelete = false;
+                        goal.CreateDate = DateTime.Now;
+                        goal.UpdateDate = DateTime.Now;
+                        db.Goals.Add(goal);
                     }
                 }
                 else
                 {
-                    db.Entry(a).State = EntityState.Modified;
-
+                    goal.UpdateDate = DateTime.Now;
+                    db.Entry(goal).State = EntityState.Modified;
                 }
 
-                foreach (var b in SOEPlanIndicator)
+                foreach (var indicator in goal.SOEPlanIndicators)
                 {
-                    if (b.ID == 0)
+                    if (indicator.ID == 0)
                     {
-                        if (b.IsDelete != true)
+                        if (indicator.IsDelete != true)
                         {
-                            b.GoalID = a.ID;
-                            db.SOEPlanIndicators.Add(b);
+                            indicator.IsDelete = false;
+                            indicator.IsLastDelete = false;
+                            indicator.CreateDate = DateTime.Now;
+                            indicator.UpdateDate = DateTime.Now;
+                            indicator.GoalID = goal.ID;
+                            db.SOEPlanIndicators.Add(indicator);
                         }
                     }
                     else
                     {
-                        db.Entry(b).State = EntityState.Modified;
+                        db.Entry(indicator).State = EntityState.Modified;
                     }
                 }
             }
         }
+
 
         [HttpPost, ActionName("DeleteForm")]
         public ActionResult DeleteForm(StrategicObjective strategicObjective)
@@ -227,8 +221,7 @@ namespace Prototype_PMS.Controllers
 
         private void Information(StrategicObjective strategicObjective)
         {
-            // ล้าง ModelState
-            ModelState.Clear();
+            var lastgoal = db.Goals.OrderByDescending(g => g.No).FirstOrDefault()?.No ?? 0;
 
             // สร้าง Goal ใหม่
             Goal goal = new Goal()
@@ -241,28 +234,36 @@ namespace Prototype_PMS.Controllers
                 IsAddIndicator = false,
             };
 
-            // กำหนด No ให้ Goal
-            if (db != null)
+            if (strategicObjective.Goals == null || !strategicObjective.Goals.Any())
             {
-                var last = db.Goals.ToList().LastOrDefault();
-                goal.No = goal.No + 1;
-                if (last == null)
+                // ถ้าไม่มี Goals ใน StrategicObjective นี้เลย
+                goal.No = lastgoal + 1;
+            }
+            else
+            {
+                // ตรวจสอบว่ามี SOEPlanIndicators ใน Goal หรือไม่
+                if (strategicObjective.Goals.Any(g => g.SOEPlanIndicators.Any()))
                 {
-                    goal.No = null; 
+                    // นับ No ต่อจาก No ของ SOEPlanIndicator ล่าสุด
+                    var lastNo = strategicObjective.Goals.SelectMany(g => g.SOEPlanIndicators).Max(si => si.No);
+                    goal.No = lastNo + 1;
                 }
                 else
                 {
-                    goal.No = last.No + 1;
+                    // หา No ของ Goal ล่าสุด
+                    var lastGoal = strategicObjective.Goals.OrderByDescending(g => g.No).FirstOrDefault();
+                    var lastGoalNo = lastGoal?.No ?? 0;
+
+                    // นับ No ต่อจาก No ของ Goal ล่าสุด
+                    goal.No = lastGoalNo + 1;
                 }
             }
 
-
-
-            // เพิ่ม Goal ใน StrategicObjective
             if (strategicObjective.Goals == null)
             {
                 strategicObjective.Goals = new List<Goal>();
             }
+
             strategicObjective.Goals.Add(goal);
         }
 

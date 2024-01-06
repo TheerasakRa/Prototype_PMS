@@ -8,6 +8,7 @@
 @Html.HiddenFor(m => m.UpdateDate)
 @Html.HiddenFor(m => m.IsAddCompetitor)
 @Html.HiddenFor(m => m.IsSelect)
+@Html.HiddenFor(m => m.MonthOrQuaterOrYear)
 
 @{
     Prototype_PMS.Models.ForecastPeriodToolAndMethod TAM = new Prototype_PMS.Models.ForecastPeriodToolAndMethod();
@@ -19,7 +20,7 @@
 
 @if (Model.IsSelect == true)
 {
-    <table class="table table-striped table-primary" style="width:1400px;">
+    <table class="table table-primary" style="width:1400px;">
         <thead>
             <tr>
                 <th scope="col" class="text-center" colspan="2">
@@ -62,7 +63,6 @@
 
                     @Html.EditorFor(model => model.ForecastValueAndRealValues.ToList()[unitIndex], "ForecastValueAndRealValue", "ForecastValueAndRealValues[" + unitIndex + "]")
                     @{ unitIndex++;}
-
 
                 <td rowspan="10">
                     <fieldset>

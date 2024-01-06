@@ -5,33 +5,33 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="728548b382814cacad19b8d79e418063" Name="Diagram1" ZoomLevel="18">
-        <EntityTypeShape EntityType="PMSModel.ForecastAnalysisResultFile" Width="1.5" PointX="15" PointY="27.5" />
-        <EntityTypeShape EntityType="PMSModel.ForecastChangeActionPlanFile" Width="1.5" PointX="18" PointY="27.5" />
-        <EntityTypeShape EntityType="PMSModel.ForecastFilePath" Width="1.5" PointX="12.75" PointY="36.625" />
-        <EntityTypeShape EntityType="PMSModel.ForecastPeriod" Width="1.5" PointX="10.5" PointY="22.75" />
-        <EntityTypeShape EntityType="PMSModel.ForecastPeriodCompetitorValue" Width="1.5" PointX="12.75" PointY="18" />
-        <EntityTypeShape EntityType="PMSModel.ForecastPeriodDocFile" Width="1.5" PointX="15" PointY="31.5" />
-        <EntityTypeShape EntityType="PMSModel.ForecastPeriodResultRemark" Width="1.5" PointX="12.75" PointY="26.25" />
-        <EntityTypeShape EntityType="PMSModel.ForecastPeriodToolAndMethod" Width="1.5" PointX="15.75" PointY="22.75" />
-        <EntityTypeShape EntityType="PMSModel.ForecastTool" Width="1.5" PointX="13.5" PointY="22.25" />
-        <EntityTypeShape EntityType="PMSModel.ForecastValueAndRealValue" Width="1.5" PointX="12.75" PointY="32.625" />
-        <EntityTypeShape EntityType="PMSModel.Goal" Width="1.5" PointX="8.25" PointY="37.25" />
-        <EntityTypeShape EntityType="PMSModel.ImportantIndicatorResultMeasurement" Width="1.5" PointX="8.25" PointY="22.875" />
-        <EntityTypeShape EntityType="PMSModel.ImportantIndicatorTargetMeasuerment" Width="1.5" PointX="7.5" PointY="32" />
+        <EntityTypeShape EntityType="PMSModel.ForecastAnalysisResultFile" Width="1.5" PointX="12" PointY="44.375" />
+        <EntityTypeShape EntityType="PMSModel.ForecastChangeActionPlanFile" Width="1.5" PointX="15" PointY="44.375" />
+        <EntityTypeShape EntityType="PMSModel.ForecastFilePath" Width="1.5" PointX="9.75" PointY="49.5" />
+        <EntityTypeShape EntityType="PMSModel.ForecastPeriod" Width="1.5" PointX="7.5" PointY="35.75" />
+        <EntityTypeShape EntityType="PMSModel.ForecastPeriodCompetitorValue" Width="1.5" PointX="9.75" PointY="39.375" />
+        <EntityTypeShape EntityType="PMSModel.ForecastPeriodDocFile" Width="1.5" PointX="12" PointY="40.375" />
+        <EntityTypeShape EntityType="PMSModel.ForecastPeriodResultRemark" Width="1.5" PointX="9.75" PointY="43.125" />
+        <EntityTypeShape EntityType="PMSModel.ForecastPeriodToolAndMethod" Width="1.5" PointX="12.75" PointY="35.75" />
+        <EntityTypeShape EntityType="PMSModel.ForecastTool" Width="1.5" PointX="10.5" PointY="35.25" />
+        <EntityTypeShape EntityType="PMSModel.ForecastValueAndRealValue" Width="1.5" PointX="9.75" PointY="31" />
+        <EntityTypeShape EntityType="PMSModel.Goal" Width="1.5" PointX="5.25" PointY="14.625" />
+        <EntityTypeShape EntityType="PMSModel.ImportantIndicatorResultMeasurement" Width="1.5" PointX="5.25" PointY="23.875" />
+        <EntityTypeShape EntityType="PMSModel.ImportantIndicatorTargetMeasuerment" Width="1.5" PointX="10.5" PointY="21.375" />
         <EntityTypeShape EntityType="PMSModel.Indicator" Width="1.5" PointX="3" PointY="22.375" />
         <EntityTypeShape EntityType="PMSModel.IndicatorDetailStatu" Width="1.5" PointX="0.75" PointY="23.25" />
-        <EntityTypeShape EntityType="PMSModel.IndicatorOwner" Width="1.5" PointX="5.25" PointY="46.375" />
-        <EntityTypeShape EntityType="PMSModel.IndicatorType" Width="1.5" PointX="3" PointY="18.125" />
-        <EntityTypeShape EntityType="PMSModel.IndicatorUnit" Width="1.5" PointX="5.25" PointY="42.5" />
-        <EntityTypeShape EntityType="PMSModel.IndicatorXIndicatorType" Width="1.5" PointX="5.25" PointY="22.875" />
+        <EntityTypeShape EntityType="PMSModel.IndicatorOwner" Width="1.5" PointX="5.25" PointY="49.875" />
+        <EntityTypeShape EntityType="PMSModel.IndicatorType" Width="1.5" PointX="8.25" PointY="16.875" />
+        <EntityTypeShape EntityType="PMSModel.IndicatorUnit" Width="1.5" PointX="5.25" PointY="19.625" />
+        <EntityTypeShape EntityType="PMSModel.IndicatorXIndicatorType" Width="1.5" PointX="8.25" PointY="25.875" />
         <EntityTypeShape EntityType="PMSModel.Owner" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="PMSModel.PeriodMonthOrQuaterOrYear" Width="1.5" PointX="6" PointY="19.25" />
-        <EntityTypeShape EntityType="PMSModel.PredictOwner" Width="1.5" PointX="5.25" PointY="49.875" />
-        <EntityTypeShape EntityType="PMSModel.SOEPlan" Width="1.5" PointX="3.75" PointY="37.5" />
-        <EntityTypeShape EntityType="PMSModel.SOEPlanIndicator" Width="1.5" PointX="10.5" PointY="32.125" />
-        <EntityTypeShape EntityType="PMSModel.StrategicObjective" Width="1.5" PointX="6" PointY="37.25" />
-        <EntityTypeShape EntityType="PMSModel.Strategy" Width="1.5" PointX="8.25" PointY="42.25" />
-        <EntityTypeShape EntityType="PMSModel.Tactic" Width="1.5" PointX="10.5" PointY="42.375" />
+        <EntityTypeShape EntityType="PMSModel.PeriodMonthOrQuaterOrYear" Width="1.5" PointX="3" PointY="28.25" />
+        <EntityTypeShape EntityType="PMSModel.PredictOwner" Width="1.5" PointX="5.25" PointY="46.375" />
+        <EntityTypeShape EntityType="PMSModel.SOEPlan" Width="1.5" PointX="0.75" PointY="14.875" />
+        <EntityTypeShape EntityType="PMSModel.SOEPlanIndicator" Width="1.5" PointX="7.5" PointY="21.375" />
+        <EntityTypeShape EntityType="PMSModel.StrategicObjective" Width="1.5" PointX="3" PointY="14.5" />
+        <EntityTypeShape EntityType="PMSModel.Strategy" Width="1.5" PointX="5.25" PointY="9.625" />
+        <EntityTypeShape EntityType="PMSModel.Tactic" Width="1.5" PointX="7.5" PointY="9.75" />
         <AssociationConnector Association="PMSModel.FK_ResultFile_ForecastFilePath" />
         <AssociationConnector Association="PMSModel.FK_ResultFile_ResultRemark" />
         <AssociationConnector Association="PMSModel.FK_ActionPlanFile_ForecastFilePath" />
@@ -58,7 +58,7 @@
         <AssociationConnector Association="PMSModel.FK_PredictOwner_Indicator" />
         <AssociationConnector Association="PMSModel.FK_SEOPlanIndicator_Indicator" />
         <AssociationConnector Association="PMSModel.FK_IndicatorXIndicatorType_IndicatorType" />
-        <AssociationConnector Association="PMSModel.FK_SOEPlanIndicator_SOEPlanIndicator" />
+        <AssociationConnector Association="PMSModel.FK_SOEPlanIndicator_IndicatorUnit" />
         <AssociationConnector Association="PMSModel.FK_StrategicObjective_SOEPlan" />
         <AssociationConnector Association="PMSModel.FK_Strategy_StrategicObjective" />
         <AssociationConnector Association="PMSModel.FK_Tactic_Strategy" />

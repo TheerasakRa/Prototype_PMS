@@ -1,0 +1,17 @@
+﻿@model Prototype_PMS.Models.Goal
+
+<td>
+    @foreach (var a in Model.SOEPlanIndicators)
+    {
+        @Html.DisplayFor(m => a.Indicator.Indicator1)
+    }
+    }
+</td>
+<td>
+    @foreach (var a in Model.SOEPlanIndicators)
+    {
+        @Html.DisplayFor(m => a.IndicatorUnit.Unit)
+    }
+    }
+</td>
+

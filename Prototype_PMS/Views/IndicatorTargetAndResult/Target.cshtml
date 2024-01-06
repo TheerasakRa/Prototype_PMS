@@ -1,4 +1,9 @@
 ﻿@model Prototype_PMS.Models.Indicator
+
+@{ 
+    var YearSelected = ViewBag.SelectedYear;
+}
+
 @using (Html.BeginForm("Target", "IndicatorTargetAndResult", FormMethod.Post, new { @class = "form-horizontal", id = "myform", name = "myform", role = "myform" }))
 {
     @Html.AntiForgeryToken()
@@ -23,8 +28,8 @@
                 @Html.DisplayName("ปีงบประมาณ : ")
             </div>
             <div class="col-md-4">
-                @Html.DropDownList("SelectYear", (List<SelectListItem>)ViewBag.YearList, new { @class = "form-control", @disabled = "disabled" })
-
+                @*@Html.DropDownList("Year", new SelectList(ViewBag.YearList, "Value", "Text", YearSelected), new { @class = "form-control", id = "Year" })*@
+                @Html.DropDownList("Year", new SelectList(ViewBag.YearList, "Value", "Text", YearSelected), new { @class = "form-control", id = "Year" })
             </div>
         </div>
     </fieldset>

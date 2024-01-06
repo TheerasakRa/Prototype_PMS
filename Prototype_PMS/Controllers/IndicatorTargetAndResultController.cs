@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Core.Common.CommandTrees;
@@ -27,7 +28,7 @@ namespace Prototype_PMS.Controllers
         static Dictionary<int, Dictionary<int, string>> _PeriodDict = new Dictionary<int, Dictionary<int, string>>();
 
         // Dictionary สำหรับเก็บข้อมูลเดือน
-        Dictionary<int, string> MountDict = new Dictionary<int, string>
+        readonly Dictionary<int, string> MountDict = new Dictionary<int, string>
         {
             {0, "ต.ค."},
             {1, "พ.ย."},
@@ -44,7 +45,7 @@ namespace Prototype_PMS.Controllers
         };
 
         // Dictionary สำหรับเก็บข้อมูลไตรมาส
-        Dictionary<int, string> QuaterDict = new Dictionary<int, string>
+        readonly Dictionary<int, string> QuaterDict = new Dictionary<int, string>
         {
             {0, "ไตรมาส 1"},
             {1, "ไตรมาส 2"},
@@ -53,7 +54,7 @@ namespace Prototype_PMS.Controllers
         };
 
         // Dictionary สำหรับเก็บข้อมูลปี
-        Dictionary<int, string> YearDict = new Dictionary<int, string>
+        readonly Dictionary<int, string> YearDict = new Dictionary<int, string>
         {
             {0, "ราย6เดือน"},
             {1, "สิ้นปี"},
@@ -108,7 +109,7 @@ namespace Prototype_PMS.Controllers
             // เตรียมข้อมูล Division และ SelectedYear สำหรับใช้ใน View
             ViewBag.Division = indicatorOwners();
             ViewBag.SelectedYear = Year;
-
+            
             // ส่งข้อมูล Indicators ที่ผ่านการกรองมาแสดงผลใน View
             return View(indicators.ToList());
         }
@@ -176,7 +177,7 @@ namespace Prototype_PMS.Controllers
             ViewBag.Unit = unitSelectList;
         }
 
-        public ActionResult Target(int? id)
+        public ActionResult Target(int? id, int? Year)
         {
             ClearStatic();
             if (id == null)
@@ -234,6 +235,7 @@ namespace Prototype_PMS.Controllers
             }
 
             selectYear();
+            ViewBag.SelectedYear = Year;
             InitDataStatic(indicator);
             indicatorType(indicator);
             indicatorUnit(indicator);
@@ -437,7 +439,7 @@ namespace Prototype_PMS.Controllers
                 }
 
                 // กำหนดจำนวน ForecastPeriods ตาม PMQY
-                Dictionary<string, int> PMQYRangeDict = new Dictionary<string, int>
+                 Dictionary<string, int> PMQYRangeDict = new Dictionary<string, int>
                 {
                     {"รายเดือน", 12},
                     {"รายไตรมาส", 4},
@@ -451,7 +453,14 @@ namespace Prototype_PMS.Controllers
                         int range = PMQYRangeDict[i.PMQY];
                         for (int j = 0; j < range; j++)
                         {
-                            i.ForecastPeriods.Add(new ForecastPeriod());
+                            i.ForecastPeriods.Add(new ForecastPeriod()
+                            {
+                                IsDelete = false,
+                                IsLastDelete = false,
+                                UpdateDate = DateTime.Now,
+                                CreateDate = DateTime.Now,
+                                MonthOrQuaterOrYear = i.PMQY,
+                            });
                         }
                     }
                 }
@@ -657,61 +666,79 @@ namespace Prototype_PMS.Controllers
                     resultMeasurement.UpdateDate = DateTime.Now;
                     db.Entry(resultMeasurement).State = EntityState.Modified;
                 }
-                foreach (var item in resultMeasurement.ForecastPeriods)
+                foreach (var forcast in resultMeasurement.ForecastPeriods)
                 {
-                    var c = item.ForecastPeriodCompetitorValues;
-                    var a = item.ForecastPeriodToolAndMethods;
-                    var d = item.ForecastPeriodResultRemarks;
-                    var b = item.ForecastValueAndRealValues;
-                    item.ForecastPeriodCompetitorValues = null;
-                    item.ForecastPeriodToolAndMethods = null;
-                    item.ForecastPeriodResultRemarks = null;
-                    item.ForecastValueAndRealValues = null;
+                    foreach(var c in forcast.ForecastPeriodCompetitorValues)
+                    {
+                        c.UpdateDate = DateTime.Now;
+                        c.IsLastDelete = false;
+                        c.IsDelete = false;
+                        if (c.ID == 0)
+                        {
+                            c.CreateDate = DateTime.Now;
+                            db.ForecastPeriodCompetitorValues.Add(c);
+                        }
+                        else
+                        {
+                            db.Entry(c).State = EntityState.Modified;
+                        }
+                    }
+                    foreach(var t in forcast.ForecastPeriodToolAndMethods)
+                    {
+                        t.UpdateDate = DateTime.Now;
+                        t.IsLastDelete = false;
+                        t.IsDelete = false;
+                        if (t.ID == 0)
+                        {
+                            t.CreateDate = DateTime.Now;
+                            db.ForecastPeriodToolAndMethods.Add(t);
+                        }
+                        else
+                        {
+                            db.Entry(t).State = EntityState.Modified;
+                        }
+                    }
+                    foreach (var r in forcast.ForecastPeriodResultRemarks)
+                    {
+                        r.UpdateDate = DateTime.Now;
+                        r.IsLastDelete = false;
+                        r.IsDelete = false;
+                        if (r.ID == 0)
+                        {
+                            r.CreateDate = DateTime.Now;
+                            db.ForecastPeriodResultRemarks.Add(r);
+                        }
+                        else
+                        {
+                            db.Entry(r).State = EntityState.Modified;
+                        }
+                        db.SaveChanges();
 
-                    item.MonthOrQuaterOrYear = resultMeasurement.PMQY;
-                    item.IsDelete = false;
-                    item.IsLastDelete = false;
-                    item.CreateDate = DateTime.Now;
-                    if (item.ID == 0)
-                    {
-                        item.ImportantIndicatorResultMeasurementID = resultMeasurement.ID;
-                        db.ForecastPeriods.Add(item);
+                        if (r.ListFilePeriodDocs != null) { ActionSaveFile(r.ListFilePeriodDocs, r.ID, 1); }
+                        if (r.ListFileAnalysis != null) { ActionSaveFile(r.ListFileAnalysis, r.ID, 2); }
+                        if (r.ListFileActionPlan != null) { ActionSaveFile(r.ListFileActionPlan, r.ID, 3); }
                     }
-                    else
+                    foreach (var v in forcast.ForecastValueAndRealValues)
                     {
-                        item.UpdateDate = DateTime.Now;
-                        db.Entry(item).State = EntityState.Modified;
+                        v.UpdateDate = DateTime.Now;
+                        v.IsLastDelete = false;
+                        v.IsDelete = false;
+                        if (v.ID == 0)
+                        {
+                            v.CreateDate = DateTime.Now;
+                            db.ForecastValueAndRealValues.Add(v);
+                        }
+                        else
+                        {
+                            db.Entry(v).State = EntityState.Modified;
+                        }
                     }
+
+                    //var d = forcast.ForecastPeriodResultRemarks;
+                    //forcast.ForecastPeriodResultRemarks = null;
+
+                    
                     db.SaveChanges();
-
-
-
-                    foreach (var ToolItem in a)
-                    {
-                        if (ToolItem.ID == 0) { ToolItem.ForecastPeriodID = item.ID; db.ForecastPeriodToolAndMethods.Add(ToolItem); } else { ToolItem.ForecastPeriodID = item.ID; db.Entry(ToolItem).State = EntityState.Modified; }
-                    }
-                    foreach (var ValueItem in b)
-                    {
-                        if (ValueItem.ID == 0) { ValueItem.ForecastPeriodID = item.ID; db.ForecastValueAndRealValues.Add(ValueItem); } else { ValueItem.ForecastPeriodID = item.ID; db.Entry(ValueItem).State = EntityState.Modified; }
-                    }
-                    foreach (var CompeItem in c)
-                    {
-                        if (CompeItem.ID == 0) { CompeItem.ForecastPeriodID = item.ID; db.ForecastPeriodCompetitorValues.Add(CompeItem); } else { CompeItem.ForecastPeriodID = item.ID; db.Entry(CompeItem).State = EntityState.Modified; }
-                    }
-                    foreach (var Remarkitem in d)
-                    {
-                        if (Remarkitem.ID == 0) { Remarkitem.ForecastPeriodID = item.ID; db.ForecastPeriodResultRemarks.Add(Remarkitem); } else { Remarkitem.ForecastPeriodID = item.ID; db.Entry(Remarkitem).State = EntityState.Modified; }
-                    }
-
-                    //if (d.Any() && d.First().ListFilePeriodDocs.Any()) { ActionSaveFile(d.First().ListFilePeriodDocs, d.First().ID, 1); }
-                    //if (d.Any() && d.First().ListFileAnalysis.Any()) { ActionSaveFile(d.First().ListFileActionPlan, d.First().ID, 2); }
-                    //if (d.Any() && d.First().ListFileActionPlan.Any()) { ActionSaveFile(d.First().ListFileActionPlan, d.First().ID, 3); }
-                    if (d.First().ListFilePeriodDocs != null) { ActionSaveFile(d.First().ListFilePeriodDocs, d.First().ID, 1); }
-                    if (d.First().ListFileAnalysis != null) { ActionSaveFile(d.First().ListFileAnalysis, d.First().ID, 2); }
-                    if (d.First().ListFileActionPlan != null) { ActionSaveFile(d.First().ListFileActionPlan, d.First().ID, 3); }
-                    db.SaveChanges();
-
-
                 }
             }
 
@@ -755,7 +782,7 @@ namespace Prototype_PMS.Controllers
                 yearList.Add(item);
             }
 
-            ViewBag.YearList = yearList; // Assign the List<SelectListItem> directly to ViewBag.YearList
+            ViewBag.YearList = yearList; 
         }
         private void ViewbagData()
         {

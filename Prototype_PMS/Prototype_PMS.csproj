@@ -139,6 +139,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IndicatorsController.cs" />
     <Compile Include="Controllers\IndicatorTargetAndResultController.cs" />
+    <Compile Include="Controllers\SOEPlanIndicatorsController.cs" />
     <Compile Include="Controllers\SOEPlansController.cs" />
     <Compile Include="Controllers\StrategicObjectivesController.cs" />
     <Compile Include="Controllers\StrategiesController.cs" />
@@ -396,6 +397,9 @@
     <Content Include="Views\Shared\EditorTemplates\ForecastPeriodResultRemark.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\ForecastValueAndRealValue.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\SOEPlanIndicator.cshtml" />
+    <Content Include="Views\SOEPlanIndicators\Target.cshtml" />
+    <Content Include="Views\SOEPlanIndicators\EditorTemplates\TargetSOEIndicator.cshtml" />
+    <Content Include="Views\SOEPlanIndicators\EditorTemplates\UnitAndIndicator.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

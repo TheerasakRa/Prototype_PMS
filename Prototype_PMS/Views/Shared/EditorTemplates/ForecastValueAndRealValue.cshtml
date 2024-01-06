@@ -11,13 +11,14 @@
 }
 
 <td>
-    <input value="@indicatorUnitDropdownList[Model.unitIndex].Text" disabled />
+    <input value="@indicatorUnitDropdownList[Model.unitIndex].Text" style="background-color: lightgray;" class="form-control" disabled />
+
 </td>
 <td>
-    @Html.EditorFor(model => model.RealValue, new { htmlAttributes = new { @class = "form-control", style = "width: 90px;" } })
+    @Html.EditorFor(model => model.RealValue, new { htmlAttributes = new { @class = "form-control", style = "width: 120px;"} })
 </td>
 <td>
 
-    @Html.EditorFor(model => model.ForecastValue, new { htmlAttributes = new { @class = "form-control", style = "width: 90px;" } })
+    @Html.EditorFor(model => model.ForecastValue, new { htmlAttributes = new { @class = "form-control", style = "width: 120px;" } })
 </td>
 

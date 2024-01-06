@@ -39,7 +39,7 @@
                         <div class="btn-group" role="group">
                             @Html.ActionLink("แก้ไข", "Edit", "StrategicObjectives", new { id = item.ID }, new { @class = "btn btn-outline-warning" })
                             @Html.ActionLink("เป้าประสงค์", "Manage", "Goals", new { StrategicObjectiveID = item.ID }, new { @class = "btn btn-outline-info" })
-                            @Html.ActionLink("ค่าเป้าหมาย", "Detail", new { id = item.ID }, new { @class = "btn btn-outline-secondary " })
+                            @Html.ActionLink("ค่าเป้าหมาย", "Target", "SOEPlanIndicators", new { id = item.ID }, new { @class = "btn btn-outline-secondary " })
                             @Html.ActionLink("ยุทธศาสตร์", "Index", "Strategies", new { StrategicObjectiveID = item.ID }, new { @class = "btn btn-outline-info" })
                             @Html.ActionLink("ประวัติการแก้ไข", "Detail", new { id = item.ID }, new { @class = "btn btn-outline-secondary " })
                             @Html.ActionLink("ลบ", "Delete", new { id = item.ID }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Are you sure you want to delete?');" })

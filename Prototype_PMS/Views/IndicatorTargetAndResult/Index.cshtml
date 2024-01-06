@@ -85,7 +85,8 @@
                 </td>
                 <td>
                     <div class="btn-group" role="group">
-                        @Html.ActionLink("เป้า", "Target", "IndicatorTargetAndResult", new { id = item.ID }, new { @class = "btn btn-outline-warning" })
+                        @Html.ActionLink("เป้า", "Target", "IndicatorTargetAndResult", new { id = item.ID, Year = ViewBag.SelectedYear }, new { @class = "btn btn-outline-warning" })
+                        @*@Html.ActionLink("เป้า", "Target", "IndicatorTargetAndResult", new { id = item.ID }, new { @class = "btn btn-outline-warning" })*@
                         @Html.ActionLink("ผล", "Result", "IndicatorTargetAndResult", new { id = item.ID }, new { @class = "btn btn-outline-secondary " })
                         @Html.ActionLink("รายงาน", "Report", "IndicatorTargetAndResult", new { id = item.ID }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Are you sure you want to delete?');" })
                         @Html.ActionLink("ประวัติการแก้ไข", "Result", "IndicatorTargetAndResult", new { id = item.ID }, new { @class = "btn btn-outline-secondary " })

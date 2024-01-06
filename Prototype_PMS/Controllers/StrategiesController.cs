@@ -56,11 +56,16 @@ namespace Prototype_PMS.Controllers
         public ActionResult Create(int? StrategicObjectiveID)
         {
             StrategicObjective strategicObjective = db.StrategicObjectives.Find(StrategicObjectiveID);
+
             ViewBag.StObID = strategicObjective.ID;
 
-            var strategy = new Strategy();
-
-            return View(strategy);
+            var stategy = new Strategy();
+            stategy.CreateDate = DateTime.Now;
+            stategy.UpdateDate = DateTime.Now;
+            stategy.isDelete = false;
+            stategy.isLastDelete = false;
+            stategy.StrategicObjectiveID = StrategicObjectiveID;
+            return View(stategy);
         }
         [HttpPost]
         public ActionResult Addtactic(Strategy strategy)
@@ -71,9 +76,24 @@ namespace Prototype_PMS.Controllers
             tactic.StrategyID = strategy.ID;
             tactic.isDelete = false;
             tactic.isLastDelete = false;
+
+            if (strategy.Tactics.Any())
+            {
+                // หาค่า No ที่มากที่สุดใน db
+                var lastNo = strategy.Tactics.Max(si => si.No);
+
+                // เพิ่มค่า No ของ Tactic ให้เป็นค่าที่มากที่สุดบนฐานข้อมูลแล้วบวก 1
+                tactic.No = lastNo + 1;
+            }
+            else
+            {
+                tactic.No = 1;
+            }
+            tactic.StrategyID = strategy.ID;
             strategy.Tactics.Add(tactic);
             return View("Create", strategy);
         }
+
         public ActionResult AddtacticEdit(Strategy strategy)
         {
             ModelState.Clear();
@@ -82,11 +102,25 @@ namespace Prototype_PMS.Controllers
             tactic.StrategyID = strategy.ID;
             tactic.isDelete = false;
             tactic.isLastDelete = false;
+            if (strategy.Tactics.Any())
+            {
+                // หาค่า No ที่มากที่สุดใน db
+                var lastNo = strategy.Tactics.Max(si => si.No);
+
+                // เพิ่มค่า No ของ Tactic ให้เป็นค่าที่มากที่สุดบนฐานข้อมูลแล้วบวก 1
+                tactic.No = lastNo + 1;
+            }
+            else
+            {
+                tactic.No = 1;
+            }
+            tactic.StrategyID = strategy.ID;
+
             strategy.Tactics.Add(tactic);
             return View("Edit", strategy);
         }
 
-      
+
         // POST: Strategies/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -99,6 +133,8 @@ namespace Prototype_PMS.Controllers
                 strategy.UpdateDate = DateTime.Now;
                 strategy.isDelete = false;
                 strategy.isLastDelete = false;
+                var laststategy = db.Strategies.LongCount();
+                strategy.No = (int)laststategy + 1;
 
                 foreach (var tactic in strategy.Tactics)
                 {
@@ -109,6 +145,7 @@ namespace Prototype_PMS.Controllers
                     tactic.isLastDelete = false;
 
                     tactic.Strategy = strategy;
+
                     db.Tactics.Add(tactic);
                 }
 
@@ -118,6 +155,7 @@ namespace Prototype_PMS.Controllers
 
             return RedirectToAction("Index", new { StrategicObjectiveID = strategy.StrategicObjectiveID });
         }
+
 
 
         // GET: Strategies/Edit/5
@@ -224,7 +262,7 @@ namespace Prototype_PMS.Controllers
                         return RedirectToAction("Index", new { StrategicObjectiveID = StrategicObjectiveID });
                     }
                     else
-                    { 
+                    {
                         var strategics = db.Strategies.Where(m => m.isDelete == true && m.isLastDelete == false).ToList();
 
                         return View(strategics);
@@ -268,6 +306,7 @@ namespace Prototype_PMS.Controllers
         public ActionResult DeleteFormTactic(Strategy strategy)
         {
             FindFormDelete(strategy.Tactics);
+            ModelState.Clear();
             return View("Create", strategy);
         }
         private void FindFormDelete(ICollection<Tactic> tactics)

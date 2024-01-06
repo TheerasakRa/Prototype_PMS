@@ -1,0 +1,98 @@
+﻿@model Prototype_PMS.Models.StrategicObjective
+
+@{
+    var StrategicObjectiveValue = ViewBag.StrategicObjective;
+    int startYear = Model.SOEPlan.StartYear.Value;
+    int endYear = Model.SOEPlan.EndYear.Value;
+
+    int yearDifference = endYear - startYear; // คำนวณระยะห่างระหว่างปี
+
+}
+@if (Model.isDelete != null)
+{
+    @Html.HiddenFor(m => m.ID)
+    @Html.HiddenFor(m => m.isLastDelete)
+    @Html.HiddenFor(m => m.isDelete)
+    @Html.HiddenFor(m => m.CreateBy)
+    @Html.HiddenFor(m => m.Updateby)
+    @Html.HiddenFor(m => m.CreateDate)
+    @Html.HiddenFor(m => m.UpdateDate)
+    @Html.HiddenFor(m => m.SOEPlanID)
+
+    <tr>
+        <th rowspan="2">
+            @Html.DisplayName("ตัวชี้วัด")
+        </th>
+        <th rowspan="2">
+            @Html.DisplayName("หน่วยวัด")
+        </th>
+        <th colspan="5">
+            @Html.DisplayName("ค่าเป้า/เกณฑ์วัด")
+        </th>
+
+    </tr>
+    <tr>
+        @for (int i = startYear; i <= endYear; i++)
+        {
+            <th class="text-center">@Html.DisplayFor(m => i)</th>
+        }
+        @*ระยะห่างระหว่างปีคือ: @yearDifference ปี*@
+    </tr>
+
+
+
+
+}
+<table class="table table-primary" style="max-width:1500px;">
+    @if (Model.isDelete != null)
+    {
+        @Html.HiddenFor(m => m.ID)
+        @Html.HiddenFor(m => m.isLastDelete)
+        @Html.HiddenFor(m => m.isDelete)
+        @Html.HiddenFor(m => m.CreateBy)
+        @Html.HiddenFor(m => m.Updateby)
+        @Html.HiddenFor(m => m.CreateDate)
+        @Html.HiddenFor(m => m.UpdateDate)
+        @Html.HiddenFor(m => m.SOEPlanID)
+
+        <tr>
+            <th rowspan="2">
+                @Html.DisplayName("ตัวชี้วัด")
+            </th>
+            <th rowspan="2">
+                @Html.DisplayName("หน่วยวัด")
+            </th>
+            <th colspan="5">
+                @Html.DisplayName("ค่าเป้า/เกณฑ์วัด")
+            </th>
+
+        </tr>
+        <tr>
+            @for (int i = startYear; i <= endYear; i++)
+            {
+                <th class="text-center">@Html.DisplayFor(m => i)</th>
+            }
+            @*ระยะห่างระหว่างปีคือ: @yearDifference ปี*@
+        </tr>
+
+        foreach (var goal in Model.Goals)
+        {
+            var a = goal.SOEPlanIndicators.Where(s => s.GoalID == goal.ID).ToList();
+
+            foreach (var indicator in a)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => indicator.Indicator.Indicator1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => indicator.IndicatorUnit.Unit)
+                    </td>
+                </tr>
+            }
+        }
+    }
+
+
+
+</table>

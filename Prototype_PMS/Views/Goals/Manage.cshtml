@@ -1,34 +1,27 @@
 ﻿@model Prototype_PMS.Models.StrategicObjective
 
 @{
-    var StrategicObjectiveValue = @ViewBag.Strantegic;
+    var StrategicObjectiveValue = @ViewBag.TitleStr;
 }
-@Html.HiddenFor(m => m.StrategicObjective1)
-@Html.HiddenFor(m => m.ID)
-@Html.HiddenFor(m => m.SOEPlanID)
-@Html.HiddenFor(m => m.SOEPlan)
-@Html.HiddenFor(m => m.isDelete)
-@Html.HiddenFor(m => m.isLastDelete)
-@Html.HiddenFor(m => m.CreateDate)
-@Html.HiddenFor(m => m.UpdateDate)
-@Html.HiddenFor(m => m.No)
-@Html.HiddenFor(m => m.StrategicObjective1, new { StrategicObjectiveValue })
-
 <p>
     วัตถุประสงค์เชิงยุทธศาสตร์ (Strategic Objectives)
     <strong>
-        @StrategicObjectiveValue
+        @*@StrategicObjectiveValue*@
         @Html.DisplayFor(m => m.StrategicObjective1)
     </strong>
 </p>
+
 @using (Html.BeginForm("Manage", "Goals", FormMethod.Post, new { role = "form", id = "myform", name = "myform" }))
 {
+    @Html.HiddenFor(m => m.ID)
+    @Html.HiddenFor(m => m.SOEPlanID)
+    @Html.HiddenFor(m => m.SOEPlan)
     @Html.HiddenFor(m => m.isDelete)
     @Html.HiddenFor(m => m.isLastDelete)
     @Html.HiddenFor(m => m.CreateDate)
     @Html.HiddenFor(m => m.UpdateDate)
-    @Html.HiddenFor(m => m.ID)
-    @Html.HiddenFor(m => m.SOEPlanID)
+    @Html.HiddenFor(m => m.No)
+    @Html.HiddenFor(m => m.StrategicObjective1)
 
     <div class="row mx-md-n5">
         <div class="col py-2 px-md-5 bordered col-example">

@@ -683,7 +683,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SOEPlanIndicator_SOEPlanIndicator">
+        <Association Name="FK_SOEPlanIndicator_IndicatorUnit">
           <End Role="IndicatorUnit" Type="Self.IndicatorUnit" Multiplicity="0..1" />
           <End Role="SOEPlanIndicator" Type="Self.SOEPlanIndicator" Multiplicity="*" />
           <ReferentialConstraint>
@@ -879,7 +879,7 @@
             <End Role="Indicator" EntitySet="Indicator" />
             <End Role="SOEPlanIndicator" EntitySet="SOEPlanIndicator" />
           </AssociationSet>
-          <AssociationSet Name="FK_SOEPlanIndicator_SOEPlanIndicator" Association="Self.FK_SOEPlanIndicator_SOEPlanIndicator">
+          <AssociationSet Name="FK_SOEPlanIndicator_IndicatorUnit" Association="Self.FK_SOEPlanIndicator_IndicatorUnit">
             <End Role="IndicatorUnit" EntitySet="IndicatorUnit" />
             <End Role="SOEPlanIndicator" EntitySet="SOEPlanIndicator" />
           </AssociationSet>
@@ -1040,7 +1040,7 @@
             <End Role="IndicatorType" EntitySet="IndicatorTypes" />
             <End Role="IndicatorXIndicatorType" EntitySet="IndicatorXIndicatorTypes" />
           </AssociationSet>
-          <AssociationSet Name="FK_SOEPlanIndicator_SOEPlanIndicator" Association="PMSModel.FK_SOEPlanIndicator_SOEPlanIndicator">
+          <AssociationSet Name="FK_SOEPlanIndicator_IndicatorUnit" Association="PMSModel.FK_SOEPlanIndicator_IndicatorUnit">
             <End Role="IndicatorUnit" EntitySet="IndicatorUnits" />
             <End Role="SOEPlanIndicator" EntitySet="SOEPlanIndicators" />
           </AssociationSet>
@@ -1367,7 +1367,7 @@
           <Property Name="isDelete" Type="Boolean" />
           <NavigationProperty Name="ImportantIndicatorTargetMeasuerments" Relationship="PMSModel.FK_Import_IndicatorUnit" FromRole="IndicatorUnit" ToRole="ImportantIndicatorTargetMeasuerment" />
           <NavigationProperty Name="Indicator" Relationship="PMSModel.FK_IndicatorUnit_Indicator" FromRole="IndicatorUnit" ToRole="Indicator" />
-          <NavigationProperty Name="SOEPlanIndicators" Relationship="PMSModel.FK_SOEPlanIndicator_SOEPlanIndicator" FromRole="IndicatorUnit" ToRole="SOEPlanIndicator" />
+          <NavigationProperty Name="SOEPlanIndicators" Relationship="PMSModel.FK_SOEPlanIndicator_IndicatorUnit" FromRole="IndicatorUnit" ToRole="SOEPlanIndicator" />
         </EntityType>
         <EntityType Name="IndicatorXIndicatorType">
           <Key>
@@ -1454,7 +1454,7 @@
           <Property Name="IsLastDelete" Type="Boolean" />
           <NavigationProperty Name="Goal" Relationship="PMSModel.FK_SEOPlanIndicator_Goal" FromRole="SOEPlanIndicator" ToRole="Goal" />
           <NavigationProperty Name="Indicator" Relationship="PMSModel.FK_SEOPlanIndicator_Indicator" FromRole="SOEPlanIndicator" ToRole="Indicator" />
-          <NavigationProperty Name="IndicatorUnit" Relationship="PMSModel.FK_SOEPlanIndicator_SOEPlanIndicator" FromRole="SOEPlanIndicator" ToRole="IndicatorUnit" />
+          <NavigationProperty Name="IndicatorUnit" Relationship="PMSModel.FK_SOEPlanIndicator_IndicatorUnit" FromRole="SOEPlanIndicator" ToRole="IndicatorUnit" />
         </EntityType>
         <EntityType Name="StrategicObjective">
           <Key>
@@ -1819,7 +1819,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SOEPlanIndicator_SOEPlanIndicator">
+        <Association Name="FK_SOEPlanIndicator_IndicatorUnit">
           <End Type="PMSModel.IndicatorUnit" Role="IndicatorUnit" Multiplicity="0..1" />
           <End Type="PMSModel.SOEPlanIndicator" Role="SOEPlanIndicator" Multiplicity="*" />
           <ReferentialConstraint>

@@ -69,6 +69,13 @@ namespace Prototype_PMS.Controllers
         {
             if (ModelState.IsValid)
             {
+                var last = db.StrategicObjectives.ToList().LastOrDefault();
+                if (last == null)
+                {
+                    last = new StrategicObjective();
+                    last.No = 0;
+                }
+                strategicObjective.No = last.No + 1;
                 strategicObjective.UpdateDate = DateTime.Now;
                 strategicObjective.CreateDate = DateTime.Now;
                 strategicObjective.isLastDelete = false;
